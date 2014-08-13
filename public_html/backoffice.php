@@ -1,3 +1,3 @@
 <?php
 
-include_once '../Backoffice/index.php';
+include_once '../BackOffice/index.php';

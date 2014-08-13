@@ -4,9 +4,15 @@ $env = getenv('APPLICATION_ENV') == 'development' ? 'dev' : 'prod';
 $env = php_sapi_name() == 'cli-server' ? 'dev' : $env ;
 
 #define('BASEPATH', TRUE); // This has been included to prevent direct access to certain files
-define('ServicesDir', '/Services/');
 define('ENV', $env);
 
+// Define where AMFPHP should look for services to consume
+define('SERVICE_DIR','../services/');
+define('MANDISA_SERVICES', SERVICE_DIR . 'mandisa/');
+define('EXAMPLE_SERVICES', SERVICE_DIR . '/ExampleServices/');
+define('NAMESPACE_SERVICES', SERVICE_DIR . '/ServicesWithNamespace/');
+define('VALUE_OBJECTS', SERVICE_DIR . 'Vo/');
+define('NAMESPACE_VALUE_OBJECTS', SERVICE_DIR . '/NamespaceVo/');
 
 
 /**/
@@ -23,7 +29,7 @@ ActiveRecord\Config::initialize(function($cfg)
     $db_password = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
     $db          = getenv('OPENSHIFT_GEAR_NAME');
 
-    $cfg->set_model_directory(dirname(__FILE__) . '/Services');
+    $cfg->set_model_directory(SERVICE_DIR);
     $cfg->set_connections(array('dev' => 'mysql://root:welcome1@localhost/appserver_db',
                                 'prod' => "mysql://$db_username:$db_password@$localhost/$db"
                               )
@@ -34,16 +40,3 @@ ActiveRecord\Config::initialize(function($cfg)
     $cfg->set_default_connection(ENV);
 	
 });
-
-
-//-- Manually loading AMFPHP might be necessary since it is being managed by composer
-//-- yet to test and confirm though
-/* LOAD AMFPHP 2.2.1
-######################################################################################################## */
-require_once dirname(__FILE__) . 'vendor/silexlabs/amfphp/Amfphp/ClassLoader.php';
-
-// Define where AMFPHP should look for services to consume
-define('SERVICE_DIR','services');
-define('NAMESPACE_SERVICES','ServicesWithNamespace/');
-define('VALUE_OBJECTS','Vo/');
-define('NAMESPACE_VALUE_OBJECTS','NamespaceVo/');
