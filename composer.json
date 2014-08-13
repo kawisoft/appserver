@@ -1,0 +1,8 @@
+{
+    "require": {
+	"phpunit/phpunit": "4.1.*",
+	"php-activerecord/php-activerecord": "dev-master",
+	"silexlabs/amfphp": "dev-master",
+	"hybridauth/hybridauth": "dev-master"
+    }
+}
